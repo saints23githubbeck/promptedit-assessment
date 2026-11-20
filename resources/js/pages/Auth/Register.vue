@@ -4,7 +4,7 @@ import {useForm, Link} from '@inertiajs/vue3';
 const form = useForm({name: '', email: '', password: '', password_confirmation: ''});
 
 function submit() {
-  form.post('/whoami/register')
+  form.post('/register')
 }
 </script>
 <template>
@@ -33,6 +33,7 @@ function submit() {
           {{ form.processing ? 'Creating account…' : 'Create account' }} <span>→</span></button>
       </form>
       <p class="auth-footer">Already have an account?
+
         <Link href="/whoami/login">Sign in</Link>
       </p>
     </section>
