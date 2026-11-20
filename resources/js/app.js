@@ -1,16 +1,23 @@
-import {createApp, h} from 'vue';
-import {createInertiaApp} from '@inertiajs/vue3';
-import axios from 'axios';
-
-window.axios = axios;
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// resources/js/app.js
 import '../css/app.css';
 
+import { createInertiaApp } from '@inertiajs/vue3';
+import { createApp, h } from 'vue';
+import { url } from './utils/url';
+
 createInertiaApp({
-    title: title => `${title} · PromptEdit Studio`, resolve: name => {
-        const pages = import.meta.glob('./pages/**/*.vue', {eager: true});
-        return pages[`./pages/${name}.vue`];
-    }, setup({el, App, props, plugin}) {
-        createApp({render: () => h(App, props)}).use(plugin).mount(el);
-    }, progress: {color: '#6d5dfc'}
+    title: (title) => title ? `${title} — PromptEdit Studio` : 'PromptEdit Studio',
+    resolve: (name) => {
+        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
+        return pages[`./Pages/${name}.vue`];
+    },
+    setup({ el, App, props, plugin }) {
+        const app = createApp({ render: () => h(App, props) });
+        app.use(plugin);
+        app.config.globalProperties.url = url;
+        app.mount(el);
+    },
+    progress: {
+        color: '#6366f1',
+    },
 });
