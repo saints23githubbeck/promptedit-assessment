@@ -74,13 +74,13 @@ function submit() {
 
         <div class="field-label-row">
           <label class="field-label" for="password">Password</label>
-          <Link
-              v-if="canResetPassword"
-              :href="url('/forgot-password')"
-              class="field-inline-link"
-          >
-            Forgot?
-          </Link>
+<!--          <Link-->
+<!--              v-if="canResetPassword"-->
+<!--              :href="url('/forgot-password')"-->
+<!--              class="field-inline-link"-->
+<!--          >-->
+<!--            Forgot?-->
+<!--          </Link>-->
         </div>
         <input
             id="password"
