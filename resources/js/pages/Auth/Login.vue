@@ -30,7 +30,7 @@ function submit() {
           {{ form.processing ? 'Signing in…' : 'Sign in' }} <span>→</span></button>
       </form>
       <p class="auth-footer">New to PromptEdit?
-        <Link href="/register">Create an account</Link>
+        <Link href="/whoami/register">Create an account</Link>
       </p>
     </section>
   </main>
