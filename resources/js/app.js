@@ -9,8 +9,9 @@ createInertiaApp({
     title: (title) => (title ? `${title} — PromptEdit Studio` : 'PromptEdit Studio'),
 
     resolve: (name) => {
-        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
-        const path = `./Pages/${name}.vue`;
+        // Lowercase `pages` — matches resources/js/pages/
+        const pages = import.meta.glob('./pages/**/*.vue', { eager: true });
+        const path = `./pages/${name}.vue`;
 
         if (!pages[path]) {
             console.error('[Inertia] Page not found', {
@@ -20,8 +21,8 @@ createInertiaApp({
             });
             throw new Error(
                 `Inertia page not found: "${name}". ` +
-                `Expected file at "resources/js/Pages/${name}.vue". ` +
-                `Available: ${Object.keys(pages).join(', ') || '(none — is the folder named Pages with a capital P?)'}`
+                `Expected file at "resources/js/pages/${name}.vue". ` +
+                `Available: ${Object.keys(pages).join(', ') || '(none)'}`
             );
         }
 
