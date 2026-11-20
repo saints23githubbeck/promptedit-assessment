@@ -15,7 +15,7 @@ function submit() {
       <span class="eyebrow">WELCOME BACK</span>
       <h1>Sign in to your studio</h1>
       <p class="auth-subtitle">Pick up where your creativity left off.</p>
-      <form @submit.prevent="submit"><label class="field-label">Email address</label><input v-model="form.email"
+      <form @submit.prevent="submit"><label class="field-label">Mail address</label><input v-model="form.email"
                                                                                             type="email"
                                                                                             autocomplete="email"
                                                                                             required

@@ -35,6 +35,7 @@ function submit() {
       <p class="auth-footer">Already have an account?
         <Link href="/login">Sign in</Link>
       </p>
+
     </section>
   </main>
 </template>
