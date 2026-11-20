@@ -66,9 +66,8 @@ onUnmounted(() => window.clearInterval(poller));
       </article>
     </div>
     <div v-if="generations.links?.length>3" class="pagination">
-      <template v-for="link in generations.links" :key="link.label"><a v-if="link.url" :href="link.url"
-                                                                       :class="{selected:link.active}"
-                                                                       v-html="link.label"></a></template>
+      <template v-for="link in generations.links" :key="link.label"><a v-if="link.url"
+                                                                       :href="link.url.startsWith('/whoami/') ? link.url : '/whoami' + link.url"></a></template>
     </div>
   </AppLayout>
 </template>
