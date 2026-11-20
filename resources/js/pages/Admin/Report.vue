@@ -285,7 +285,6 @@ const shortMoney = value => {
                   </tbody>
                 </table>
               </div>
-
               <div v-else class="no-users">
                 No user-level activity recorded for this day.
               </div>
@@ -293,7 +292,6 @@ const shortMoney = value => {
           </article>
         </div>
 
-        <!-- Empty state -->
         <div v-else class="report-empty">
           <div class="empty-icon">▤</div>
           <h3>No usage data available</h3>
