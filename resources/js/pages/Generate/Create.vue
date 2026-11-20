@@ -1,8 +1,9 @@
 
 <script setup>
 import { computed, onBeforeUnmount, ref, watch } from 'vue';
-import { Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import AppLayout from '../../layouts/AppLayout.vue';
+import { url } from '@/utils/url';
 
 const props = defineProps({
   pricing: Object,
@@ -52,7 +53,7 @@ watch(
 
         try {
           const response = await window.axios.post(
-              '/whoami/generate/estimate',
+              url('/generate/estimate'),
               {
                 prompt: form.prompt,
                 size: form.size,
@@ -62,7 +63,9 @@ watch(
                     .map(x => x.trim())
                     .filter(Boolean),
               },
-              {signal: controller.signal}
+              {
+                signal: controller.signal,
+              }
           );
 
           if (version === estimateVersion) {
@@ -106,25 +109,40 @@ function submit() {
       .map(x => x.trim())
       .filter(Boolean);
 
-  form.post('/whoami/generate', {
+  form.post(url('/generate'), {
     onError: () => {
       error.value = 'Please review the form and try again.';
     },
   });
 }
 
-const money = v =>
-    v == null ? '—' : `$${Number(v).toFixed(9)}`;
+const money = value =>
+    value == null ? '—' : `$${Number(value).toFixed(9)}`;
 </script>
 
 <template>
+  <Head title="New generation" />
+
   <AppLayout>
-    <template #title>New generation</template>
+    <template #title>
+      New generation
+    </template>
 
     <!-- Page navigation -->
     <div class="page-navigation">
-      <Link :href="route('generate.create')" class="active">
+      <Link
+          :href="url('/generate')"
+          class="active"
+      >
         Generate
+      </Link>
+
+      <Link :href="url('/history')">
+        History
+      </Link>
+
+      <Link :href="url('/admin/report')">
+        Usage & Profit
       </Link>
     </div>
 
@@ -133,7 +151,9 @@ const money = v =>
         <div class="panel-heading">
           <div>
             <span class="eyebrow">IMAGE STUDIO</span>
+
             <h2>Bring an idea to life</h2>
+
             <p>
               Describe what you want to create.
               Your estimate updates as you work.
@@ -144,9 +164,12 @@ const money = v =>
         </div>
 
         <form @submit.prevent="submit">
-          <label class="field-label">Your prompt</label>
+          <label class="field-label" for="prompt">
+            Your prompt
+          </label>
 
           <textarea
+              id="prompt"
               v-model="form.prompt"
               class="prompt-input"
               maxlength="4000"
@@ -155,25 +178,40 @@ const money = v =>
           ></textarea>
 
           <div class="field-foot">
-            <span>Be descriptive for more intentional results</span>
-            <span>{{ form.prompt.length }} / 4,000</span>
+                        <span>
+                            Be descriptive for more intentional results
+                        </span>
+
+            <span>
+                            {{ form.prompt.length }} / 4,000
+                        </span>
           </div>
 
-          <div v-if="form.errors.prompt" class="field-error">
+          <div
+              v-if="form.errors.prompt"
+              class="field-error"
+          >
             {{ form.errors.prompt }}
           </div>
 
           <div class="form-row">
             <div class="field">
-              <label class="field-label">Canvas size</label>
+              <label class="field-label" for="size">
+                Canvas size
+              </label>
 
-              <select v-model="form.size">
+              <select
+                  id="size"
+                  v-model="form.size"
+              >
                 <option value="1024x1024">
                   Square · 1:1
                 </option>
+
                 <option value="1536x1024">
                   Landscape · 3:2
                 </option>
+
                 <option value="1024x1536">
                   Portrait · 2:3
                 </option>
@@ -181,25 +219,40 @@ const money = v =>
             </div>
 
             <div class="field">
-              <label class="field-label">Quality</label>
+              <label class="field-label" for="quality">
+                Quality
+              </label>
 
-              <select v-model="form.quality">
-                <option value="low">Draft · Low</option>
-                <option value="medium">Standard · Medium</option>
-                <option value="high">Ultra · High</option>
+              <select
+                  id="quality"
+                  v-model="form.quality"
+              >
+                <option value="low">
+                  Draft · Low
+                </option>
+
+                <option value="medium">
+                  Standard · Medium
+                </option>
+
+                <option value="high">
+                  Ultra · High
+                </option>
               </select>
             </div>
           </div>
 
           <div class="field">
-            <label class="field-label">
+            <label class="field-label" for="references">
               Reference images
+
               <span class="optional">
                                 OPTIONAL · UP TO 4 URLS
                             </span>
             </label>
 
             <textarea
+                id="references"
                 v-model="refsText"
                 class="reference-input"
                 placeholder="https://example.com/reference.jpg&#10;One image URL per line"
@@ -212,7 +265,9 @@ const money = v =>
 
           <div class="estimate-card">
             <div>
-              <span class="eyebrow">ESTIMATED TOTAL</span>
+                            <span class="eyebrow">
+                                ESTIMATED TOTAL
+                            </span>
 
               <div class="estimate-price">
                 {{
@@ -222,13 +277,19 @@ const money = v =>
                 }}
               </div>
 
-              <p>Provider estimate + 25% service markup</p>
+              <p>
+                Provider estimate + 25% service markup
+              </p>
             </div>
 
             <div class="estimate-icon">$</div>
           </div>
 
-          <div v-if="error" class="field-error">
+          <div
+              v-if="error"
+              class="field-error"
+              role="alert"
+          >
             {{ error }}
           </div>
 
@@ -247,6 +308,7 @@ const money = v =>
                   ? 'Submitting…'
                   : 'Generate image'
             }}
+
             <span>→</span>
           </button>
 
@@ -263,7 +325,9 @@ const money = v =>
 
           <div class="preview-empty">
             <div class="preview-art">✧</div>
+
             <strong>Your canvas awaits</strong>
+
             <span>
                             Your generated image will appear in History
                             once complete.

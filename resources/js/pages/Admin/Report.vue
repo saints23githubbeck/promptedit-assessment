@@ -1,28 +1,48 @@
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '../../layouts/AppLayout.vue';
+import { url } from '@/utils/url';
 
 defineProps({
-  days: Array,
-  range: Object,
-  provider_total: String,
+  days: {
+    type: Array,
+    default: () => [],
+  },
+  range: {
+    type: Object,
+    default: () => ({
+      start: '',
+      end: '',
+    }),
+  },
+  provider_total: {
+    type: [String, Number],
+    default: 0,
+  },
 });
 
-const money = v => `$${Number(v ?? 0).toFixed(9)}`;
+const money = value => `$${Number(value ?? 0).toFixed(9)}`;
 </script>
 
 <template>
+  <Head title="Usage & Profit" />
+
   <AppLayout>
-    <template #title>Usage & Profit</template>
+    <template #title>
+      Usage & Profit
+    </template>
 
     <!-- Page navigation -->
     <div class="page-navigation">
-      <Link :href="route('generate.create')">
+      <Link :href="url('/generate')">
         Generate
       </Link>
 
-      <Link :href="route('admin.report')" class="active">
+      <Link
+          :href="url('/admin/report')"
+          class="active"
+      >
         Usage & Profit
       </Link>
     </div>
@@ -30,7 +50,9 @@ const money = v => `$${Number(v ?? 0).toFixed(9)}`;
     <div class="panel">
       <div class="report-header">
         <div>
-          <span class="eyebrow">PROVIDER SOURCE OF TRUTH</span>
+                    <span class="eyebrow">
+                        PROVIDER SOURCE OF TRUTH
+                    </span>
 
           <h2>{{ money(provider_total) }}</h2>
 
@@ -84,16 +106,16 @@ const money = v => `$${Number(v ?? 0).toFixed(9)}`;
         </p>
 
         <div
-            v-for="u in day.users"
-            :key="u.user"
+            v-for="user in day.users"
+            :key="user.user"
             class="report-user"
         >
-          <span>{{ u.user }}</span>
+          <span>{{ user.user }}</span>
 
           <span>
-                        {{ money(u.charged) }} charged ·
-                        {{ money(u.provider_cost) }} provider ·
-                        {{ money(u.profit) }} profit
+                        {{ money(user.charged) }} charged ·
+                        {{ money(user.provider_cost) }} provider ·
+                        {{ money(user.profit) }} profit
                     </span>
         </div>
       </div>
