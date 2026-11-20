@@ -38,6 +38,14 @@ A Laravel 12, Vue 3 and Inertia application for asynchronous Pixelforge image ge
    npm run dev
    ```
 
+Demo accounts (password `password`):
+
+| Email | Notes |
+| --- | --- |
+| `admin@promptedit.test` | sees the operator report |
+| `demo@promptedit.test` | regular user, $10 balance |
+| `sam@promptedit.test` | regular user, $5 balance |
+
 5. In another terminal, run the scheduler while developing:
 
    ```bash
