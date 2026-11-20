@@ -299,7 +299,6 @@ const shortMoney = value => {
             There are no provider generations recorded for
             this reporting period.
           </p>
-
           <Link
               :href="url('/generate')"
               class="report-button report-button-primary"

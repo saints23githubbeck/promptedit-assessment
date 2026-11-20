@@ -110,7 +110,6 @@ function submit() {
           />
           Keep me signed in
         </label>
-
         <button
             class="primary-button full"
             type="submit"
