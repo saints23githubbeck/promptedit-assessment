@@ -33,8 +33,7 @@ function submit() {
           {{ form.processing ? 'Creating account…' : 'Create account' }} <span>→</span></button>
       </form>
       <p class="auth-footer">Already have an account?
-
-        <Link href="/whoami/login">Sign in</Link>
+        <Link href="/login">Sign in</Link>
       </p>
     </section>
   </main>
